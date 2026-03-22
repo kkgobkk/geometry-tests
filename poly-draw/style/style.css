@@ -1,0 +1,14 @@
+#screen{
+	border: 2px solid #202020
+}
+
+.center{
+	text-align: center;
+	margin: auto;
+	margin-top: 5%;
+}
+
+.buttons{
+	margin-top: 10px;
+	margin-left: 0px;
+}

@@ -1,0 +1,22 @@
+<head>
+	<title>poly_draw</title>
+	<link rel = "stylesheet" href = "style/style.css">
+</head>
+
+<body>
+	<div class = "center">
+		<h1>poly_draw</h1>
+		<canvas id = "screen" width = "500px" height = "500px"></canvas>
+		<br>
+		sides: <input type = "number" min = "3" max = "100" value = "3" id = "sides" class = "buttons">
+		radius: <input type = "number" id = "radius" min = "3" max = "250" value = "100" class = "buttons">
+		angle: <input type = "number" id = "angle" min = "0" max = "359" value = "90" class = "buttons">
+		<br>
+		<button id = "draw" class = "buttons">draw</button>
+		<button id = "clear" class = "buttons">clear</button>
+		
+	</div>
+	<script src = "script/polar_coord.js"></script>
+	<script src = "script/carthesian_renderer.js"></script>
+	<script src = "script/main.js"></script>
+</body>
