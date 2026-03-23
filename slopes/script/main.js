@@ -127,19 +127,19 @@ let drawSlopes = function(points){
     ctx.restore();
 }
 
-let invCount = function(points, compare){
+let invCount = function(array, compare){
     let inv_left = 0;
     let inv_right = 0;
     let left = [];
     let right = [];
 
-    if(points.length < 2){
-        return {sorted:points, count:0};
+    if(array.length < 2){
+        return {sorted:array, count:0};
     }
 
-    let midpoint = Math.floor(points.length/2);
-    left = points.slice(0, midpoint);
-    right = points.slice(midpoint, points.length);
+    let midpoint = Math.floor(array.length/2);
+    left = array.slice(0, midpoint);
+    right = array.slice(midpoint, array.length);
 
     let tmp = invCount(left, compare);
     left = tmp.sorted;
@@ -150,25 +150,25 @@ let invCount = function(points, compare){
 
 
     let i = 0, j = 0, inv = 0;
-    points =[];
+    array =[];
 
     while(i < left.length && j < right.length){
-        if(compare(left[i], right[j]) > 0){
-            points.push(left[i++]);
+        if(compare(left[i], right[j]) <= 0){
+            array.push(left[i++]);
         }
         else{
-            points.push(right[j++]);
+            array.push(right[j++]);
             inv += left.length - i;
         }
     }
 
     if(i < left.length){
-        points.push.apply(points, left.slice(i, left.length));
+        array.push.apply(array, left.slice(i, left.length));
     }
     if(j < right.length){
-        points.push.apply(points, right.slice(j, right.length));
+        array.push.apply(array, right.slice(j, right.length));
     }
-    return {sorted:points, count: inv + inv_left + inv_right};
+    return {sorted:array, count: inv + inv_left + inv_right};
 }
 
 let pointToLineDual = function(p){
@@ -184,9 +184,9 @@ let run = function(){
     drawSlopes(points);
     drawPoints(points);
 
-    document.getElementById("total").value = binom(points.length, 2);
+    let total = document.getElementById("total").value = binom(points.length, 2);
     let tmp = invCount(points, (a, b) => a.y - b.y);
-    document.getElementById("nonneg").value = tmp.count;
+    document.getElementById("nonneg").value = total - tmp.count;
     points = tmp.sorted;
 
     let minx = document.getElementById("minimum").value;
@@ -195,16 +195,21 @@ let run = function(){
     for(k in points){
         lines.push(pointToLineDual(points[k]));
     }
-    lines.sort((a, b) => (a.m*minx-b.q) - (b.m*minx-a.q))//sort the lines based on their intersection with the left boundary of the interval (top to bottom)
-    console.log(lines);
-    tmp = invCount(lines, (a, b) => (a.m*maxx-b.q) - (b.m*maxx-a.q));
+    lines.sort((a, b) => {
+        let d =(a.m*minx+a.q) - (b.m*minx+b.q)
+        if (d == 0) return a.m - b.m;
+        else return d;
+    });
+    tmp = invCount(lines, (a, b) => {
+        let d =(a.m*maxx+a.q) - (b.m*maxx+b.q)
+        if (d == 0) return a.m - b.m;
+        else return d;
+    });
     document.getElementById("interval").value = tmp.count;
-    lines = tmp.sorted;
-    console.log(lines)
 }
 
 let generateAndRun = function(){
-    points = generatePoints(document.getElementById("points").value);
+    points = generatePoints(document.getElementById("points").value)
     run();
 }
 

@@ -1,0 +1,30 @@
+.center{
+	text-align: center;
+	margin: auto;
+	margin-top: 5%;
+	display: table;
+}
+
+.canva{
+	border: 2px solid #202020;
+	margin: 0px 50px 0px 50px;
+	display: table-cell;
+}
+
+.sidebar_section{
+	padding-bottom: 50px;
+	margin-bottom: 50px;
+}
+
+#sidebar{
+	height: 750px;
+	margin: 0px 50px 0px 50px;
+	float: right;
+	text-align: left;
+	display: table-cell;
+	
+}
+
+#results{
+	border-bottom: 0px;
+}
