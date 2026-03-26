@@ -197,7 +197,7 @@ let run = function(){
     }
     lines.sort((a, b) => {
         let d =(a.m*minx+a.q) - (b.m*minx+b.q)
-        if (d == 0) return a.m - b.m;
+        if (d == 0) return b.m - a.m;
         else return d;
     });
     tmp = invCount(lines, (a, b) => {
